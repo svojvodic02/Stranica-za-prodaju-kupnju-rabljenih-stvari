@@ -1,0 +1,50 @@
+﻿@model Vjezba.Model.Listing
+
+<div class="form-group">
+	<label class="control-label">Naziv proizvoda</label>
+	<input asp-for="Title" class="form-control" />
+	<span asp-validation-for="Title" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Opis</label>
+	<input asp-for="Description" class="form-control" />
+	<span asp-validation-for="Description" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label asp-for="Price" class="control-label"></label>
+	<input asp-for="Price" class="form-control" type="number" step="0.01"/>
+	<span asp-validation-for="Price" class="text-danger"></span>
+</div>
+
+@{
+	var pattern = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower();
+	pattern = pattern.Replace("DD", "D").Replace("D", "DD");
+	pattern = pattern.Replace("MM", "M").Replace("M", "MM");
+}
+
+<div class="form-group">
+	<label class="control-label">Datum</label>
+
+	<div class="input-group date inp-datepicker" data-format="@pattern">
+		<input type="text" class="form-control" asp-for="UpdatedAt" />
+		<span class="input-group-append">
+			<span class="input-group-text bg-light d-block">
+				<i class="fa fa-calendar"></i>
+			</span>
+		</span>
+	</div>
+	<span asp-validation-for="UpdatedAt" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Grad</label>
+	<select asp-for="CityID" asp-items="ViewBag.PossibleCities" class="form-control"></select>
+	<span asp-validation-for="CityID" class="text-danger"></span>
+</div>
+<div class="form-group">
+	<label class="control-label">Kategorija</label>
+	<select asp-for="ListingTypeID" asp-items="ViewBag.PossibleListingTypes" class="form-control"></select>
+	<span asp-validation-for="ListingTypeID" class="text-danger"></span>
+	</div>
+<div class="form-group">
+	<input type="submit" value="Spremi" class="btn btn-outline-success" />
+</div>

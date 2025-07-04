@@ -1,0 +1,32 @@
+﻿@{
+	ViewData["Title"] = "FAQ";
+	var selectedNumber = (int?)ViewData["selected"];
+}
+<h2>@ViewData["Title"]</h2>
+
+<ul>
+	<li>
+		<div class="@(selectedNumber == 1 ? "bold" : "")">
+			Q: Čemu služi web stranica?
+		</div>
+		<div>
+			A: Prodaji i kupnji rabljene robe.
+		</div>
+	</li>
+
+	<li>
+		<div class="@(selectedNumber == 2 ? "bold" : "")">
+			Q: Mogu li prodavati robu?
+		</div>
+		<div>
+			A: Naravno!
+		</div>
+	</li>
+
+</ul>
+
+<style type="text/css">
+	.bold {
+		font-weight: bold;
+	}
+</style>

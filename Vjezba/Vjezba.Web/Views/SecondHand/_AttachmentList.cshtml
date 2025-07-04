@@ -1,0 +1,14 @@
+﻿@using System.IO
+
+@model List<Vjezba.Model.Attachment>
+
+<ul class="list-group mt-3">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="@item.AttachmentPath" target="_blank">@item.Id</a>
+
+            <button class="btn btn-danger btn-sm delete-attachment" data-id="@item.Id">Obriši</button>
+        </li>
+    }
+</ul>

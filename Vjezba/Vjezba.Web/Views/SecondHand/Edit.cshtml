@@ -1,0 +1,73 @@
+﻿@model Vjezba.Model.Listing
+
+@{
+	ViewData["Title"] = "Uređivanje ";
+}
+
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css"
+  type="text/css"
+/>
+
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-action="Index">Popis </a></li>
+		<li class="breadcrumb-item active" aria-current="page">Uređivanje </li>
+	</ol>
+</nav>
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Edit">
+			<input type="hidden" asp-for="ID" />
+			<partial name="_CreateOrEdit" />
+		</form>
+		<div id="attachmentList">
+			<partial name ="_AttachmentList" model="Model.Attachments?.ToList() ?? new List<Vjezba.Model.Attachment>()" />
+		</div>
+	</div>
+
+	<input type="hidden" id="listingId" name="listingId" value="@Model.ID" />
+
+	<form asp-controller="SecondHand" asp-action="UploadAttachment" asp-route-clientId="@Model.ID" class="dropzone" id="myDropzone" enctype="multipart/form-data">
+		@Html.AntiForgeryToken()
+		<input type="hidden" name="listingId" value="@Model.ID" />
+	</form>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		Dropzone.options.attachmentDropzone = {
+			paramName: "file",
+			maxFilesize: 5,
+			uploadMultiple: true,
+			headers:{
+				"RequestVerificationToken" : $('input[name="__RequestVerificationToken"]').val()
+			},
+			success:function(){
+				loadAttachments();
+			}
+		};
+		function loadAttachments() {
+			var listingId = $('#listingId').val();
+			$.get('/SecondHand/GetAttachments', { listingId: listingId }, function (data) {
+				$('#attachmentList').html(data);
+			});
+		}
+
+		$(document).ready(function () {
+			loadAttachments();
+			$('#attachmentList').on('click', '.delete-attachment', function (){
+				var id = $(this).data('id');
+				var token = $('input[name="__RequestVerificationToken"]').val();
+				$.post('/SecondHand/DeleteAttachment',{id:id, __RequestVerificationToken: token}, function(){
+					loadAttachments();
+				});
+			});
+		});
+
+	</script>
+
+</div>
+
