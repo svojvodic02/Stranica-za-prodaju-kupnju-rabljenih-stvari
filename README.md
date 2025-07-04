@@ -1,4 +1,3 @@
-# vojvodić-sara-1191250193
 Projekt za kolegij ASP.NET MVC, ak. god. 2024/25
 
 Tema projekta "SecondHand", stranica za prodaju/kupnju rabljenih stvari. 
